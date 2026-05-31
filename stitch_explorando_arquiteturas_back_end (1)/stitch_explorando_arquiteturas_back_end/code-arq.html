@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Back-End Mastery | The Engineering Lab</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Geist:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glow-cyan {
+            box-shadow: 0 0 15px rgba(0, 220, 229, 0.15);
+        }
+        .terminal-cursor::after {
+            content: '_';
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+        .grid-bg {
+            background-image: radial-gradient(circle at 2px 2px, #233554 1px, transparent 0);
+            background-size: 32px 32px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary": "#00dce5",
+                        "secondary": "#b6c6ed",
+                        "on-surface": "#d9e2ff",
+                        "on-tertiary-fixed": "#002021",
+                        "inverse-primary": "#515f78",
+                        "on-background": "#d9e2ff",
+                        "outline-variant": "#44474d",
+                        "tertiary-fixed-dim": "#00dce5",
+                        "inverse-on-surface": "#263049",
+                        "on-secondary": "#20304f",
+                        "primary": "#b9c7e4",
+                        "on-secondary-container": "#a5b5db",
+                        "surface-container-lowest": "#030d25",
+                        "primary-container": "#0a192f",
+                        "surface-container": "#151f37",
+                        "on-primary-container": "#74829d",
+                        "surface-container-highest": "#2a344e",
+                        "tertiary-fixed": "#63f7ff",
+                        "primary-fixed": "#d6e3ff",
+                        "secondary-container": "#374767",
+                        "secondary-fixed-dim": "#b6c6ed",
+                        "on-primary-fixed-variant": "#39475f",
+                        "surface-variant": "#2a344e",
+                        "on-secondary-fixed": "#091b39",
+                        "error": "#ffb4ab",
+                        "surface": "#07122a",
+                        "surface-container-high": "#1f2942",
+                        "on-primary-fixed": "#0d1c32",
+                        "on-tertiary-container": "#009096",
+                        "on-tertiary-fixed-variant": "#004f53",
+                        "on-surface-variant": "#c5c6cd",
+                        "surface-bright": "#2f3952",
+                        "tertiary-container": "#001d1f",
+                        "inverse-surface": "#d9e2ff",
+                        "on-tertiary": "#003739",
+                        "on-error": "#690005",
+                        "on-primary": "#233148",
+                        "surface-container-low": "#101b33",
+                        "surface-dim": "#07122a",
+                        "outline": "#8f9097",
+                        "on-error-container": "#ffdad6",
+                        "error-container": "#93000a",
+                        "surface-tint": "#b9c7e4",
+                        "on-secondary-fixed-variant": "#374767",
+                        "primary-fixed-dim": "#b9c7e4",
+                        "secondary-fixed": "#d8e2ff",
+                        "background": "#07122a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "base": "8px",
+                        "container-max": "1280px",
+                        "margin-desktop": "48px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Geist"],
+                        "label-md": ["JetBrains Mono"],
+                        "headline-lg": ["JetBrains Mono"],
+                        "body-lg": ["Geist"],
+                        "code-sm": ["JetBrains Mono"],
+                        "display-lg": ["JetBrains Mono"],
+                        "headline-md": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "code-sm": ["13px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md selection:bg-tertiary selection:text-on-tertiary">
+<!-- TopAppBar -->
+<header class="bg-surface docked full-width top-0 border-b border-outline-variant flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-16 sticky z-50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-tertiary" data-icon="terminal">terminal</span>
+<span class="font-headline-md text-headline-md text-tertiary tracking-tighter">Back-End Mastery</span>
+</div>
+<nav class="hidden md:flex gap-8 items-center">
+<a class="font-label-md text-label-md text-tertiary font-bold hover:text-tertiary transition-colors" href="code-arq.html">Início</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-tertiary transition-colors" href="code-lin.html">Linguagens</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-tertiary transition-colors" href="code-ban.html">Bancos de Dados</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-tertiary transition-colors" href="code-mas.html">Sistema</a>
+</nav>
+</header>
+<main class="min-h-screen">
+<!-- Hero Section -->
+<section class="relative pt-24 pb-32 overflow-hidden px-margin-mobile md:px-0">
+<div class="absolute inset-0 grid-bg opacity-30 pointer-events-none"></div>
+<div class="max-w-container-max mx-auto relative z-10">
+<div class="grid lg:grid-cols-2 gap-16 items-center">
+<div class="space-y-8">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-tertiary/30 bg-tertiary/5 text-tertiary font-label-md text-label-md">
+<span class="material-symbols-outlined text-sm" data-icon="new_releases">new_releases</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-on-surface max-w-xl">
+                            Domine o <span class="text-tertiary">Core</span> da Computação Moderna.
+                        </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg">
+                            Vá além de APIs simples. Mergulhe profundamente na lógica, performance e integridade estrutural que sustentam as infraestruturas mais complexas da internet.
+                        </p>
+
+</div>
+<!-- Terminal Card -->
+<div class="hidden lg:block">
+<div class="bg-surface-container-highest border border-outline-variant rounded-xl overflow-hidden shadow-2xl">
+<div class="bg-surface-variant px-4 py-3 flex items-center justify-between border-b border-outline-variant">
+<div class="flex gap-2">
+<div class="w-3 h-3 rounded-full bg-error/40"></div>
+<div class="w-3 h-3 rounded-full bg-secondary/40"></div>
+<div class="w-3 h-3 rounded-full bg-tertiary/40"></div>
+</div>
+<span class="text-code-sm font-label-md text-on-surface-variant">server.go — backend-mastery</span>
+</div>
+<div class="p-6 font-code-sm text-code-sm text-secondary space-y-2 bg-[#030d25]">
+<div class="flex gap-4"><span class="text-outline/40">01</span><span class="text-tertiary">package</span> main</div>
+<div class="flex gap-4"><span class="text-outline/40">02</span></div>
+<div class="flex gap-4"><span class="text-outline/40">03</span><span class="text-tertiary">import</span> <span class="text-on-secondary-container">"github.com/lab/core"</span></div>
+<div class="flex gap-4"><span class="text-outline/40">04</span></div>
+<div class="flex gap-4"><span class="text-outline/40">05</span><span class="text-tertiary">func</span> <span class="text-on-surface">InitSystem</span>() {</div>
+<div class="flex gap-4"><span class="text-outline/40">06</span>   engine := core.NewEngine()</div>
+<div class="flex gap-4"><span class="text-outline/40">07</span>   engine.Bootstrap(<span class="text-on-secondary-container">"production"</span>)</div>
+<div class="flex gap-4"><span class="text-outline/40">08</span>   <span class="terminal-cursor">engine.Run()</span></div>
+<div class="flex gap-4"><span class="text-outline/40">09</span>}</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Bento Grid Modules -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-0 py-24">
+<div class="text-center mb-16 space-y-4">
+<h2 class="font-headline-lg text-headline-lg">Currículo Sistemático</h2>
+<div class="w-24 h-1 bg-tertiary mx-auto"></div>
+</div>
+<div class="grid md:grid-cols-3 gap-6">
+<!-- Languages -->
+<div class="group relative bg-surface-container border border-outline-variant p-8 hover:border-tertiary/50 transition-all duration-300">
+<div class="mb-6">
+<span class="material-symbols-outlined text-4xl text-tertiary" data-icon="code">code</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-4">Linguagens</h3>
+<p class="text-on-surface-variant mb-6">Domine linguagens compiladas otimizadas para execução no lado do servidor. Foco em Python, Go e Rust.</p>
+<ul class="space-y-2 mb-8 text-label-md text-secondary">
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-tertiary"></span> Microservices em Go</li>
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-tertiary"></span> Memory Safety em Rust</li>
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-tertiary"></span> Performance em Python</li>
+</ul>
+</div>
+<!-- Databases -->
+<div class="group relative bg-surface-container border border-outline-variant p-8 hover:border-tertiary/50 transition-all duration-300">
+<div class="mb-6">
+<span class="material-symbols-outlined text-4xl text-tertiary" data-icon="database">database</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-4">Bancos de Dados</h3>
+<p class="text-on-surface-variant mb-6">Arquitete camadas de dados que escalam. Engenharia de bancos Relacionais, Documentos e Vector.</p>
+<ul class="space-y-2 mb-8 text-label-md text-secondary">
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-tertiary"></span> Otimização SQL</li>
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-tertiary"></span> Arquitetura NoSQL</li>
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-tertiary"></span> Estratégias de Cache</li>
+</ul>
+</div>
+<!-- Architecture -->
+<div class="group relative bg-surface-container border border-outline-variant p-8 hover:border-tertiary/50 transition-all duration-300">
+<div class="mb-6">
+<span class="material-symbols-outlined text-4xl text-tertiary" data-icon="account_tree">account_tree</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-4">Arquitetura</h3>
+<p class="text-on-surface-variant mb-6">Aprenda a construir sistemas distribuídos. De monorepos a clusters globalmente disponíveis.</p>
+<ul class="space-y-2 mb-8 text-label-md text-secondary">
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-tertiary"></span> Distributed Systems</li>
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-tertiary"></span> Message Queues</li>
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-tertiary"></span> Docker &amp; K8s</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Technical Showcase -->
+<section class="bg-surface-container-low py-24 border-y border-outline-variant">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-0">
+<div class="flex flex-col md:flex-row gap-12 items-center">
+<div class="w-full md:w-1/2">
+<div class="relative rounded-xl overflow-hidden aspect-video border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="Um close-up macro de um data center de alta tecnologia com luzes LED azuis e ciano brilhantes em switches de rede e racks de servidores. A imagem usa uma profundidade de campo rasa para enfatizar os detalhes intrincados do hardware. A atmosfera é profissional, técnica e limpa, refletindo perfeitamente um ambiente de engenharia back-end de alto desempenho. A iluminação é dramática e de alto contraste, destacando as texturas de metal e cabos de fibra óptica." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCE8VzkRgbIHhBlLpj8Vn1HQ1pvm1H_3mJGtmBma6pUmSWWLOS4zxJi1e6eS9S7exRRn7xLgLDngay8DB3csjCpuufOJ5UU4zJCDDoN6FH5vHGs5rpyVxm12_wHIdBeqLh2HX2pCKPrkEG5v4xZGQeoryNNQ5G6Ldm1sdFzy8OjTVrfW3c9lVcMh-jbd8mb4vly2O8p_ALhq9AWRVOgzijxJQzeEyuDKbmdiioG9YbOPT6AXWpekF48bzwhl7s7uHon8CnH2_l63Wc"/>
+</div>
+</div>
+<div class="w-full md:w-1/2 space-y-6">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Experiência de Aprendizado de Engenharia de Precisão</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                            Nosso currículo não é apenas uma lista de tutoriais. É uma simulação de engenharia projetada para construir memória muscular para a resolução de problemas complexos. Cada lição inclui um desafio de nível de produção que deve passar por rigorosos testes unitários.
+                        </p>
+<div class="grid grid-cols-2 gap-6">
+<div class="border-l-2 border-tertiary pl-4">
+<div class="font-headline-md text-headline-md text-tertiary">500+</div>
+<div class="font-label-md text-label-md text-on-surface-variant">Projetos ao Vivo</div>
+</div>
+<div class="border-l-2 border-tertiary pl-4">
+<div class="font-headline-md text-headline-md text-tertiary">12k+</div>
+<div class="font-label-md text-label-md text-on-surface-variant">Engenheiros Ativos</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant mt-margin-desktop w-full px-margin-mobile py-8 flex flex-col items-center gap-4">
+<div class="font-headline-md text-tertiary">Back-End Mastery</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Back-End Trabalho de IA</p>
+</footer>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 flex justify-around items-center py-2 bg-surface-container border-t border-outline-variant">
+<div class="flex flex-col items-center justify-center text-tertiary font-bold bg-secondary-container rounded-xl px-3 py-1">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-md text-label-md">Início</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1">
+<span class="material-symbols-outlined" data-icon="code">code</span>
+<span class="font-label-md text-label-md">Linguagens</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1">
+<span class="material-symbols-outlined" data-icon="database">database</span>
+<span class="font-label-md text-label-md">Bancos</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+<span class="font-label-md text-label-md">Sistema</span>
+</div>
+</nav>
+<script>
+        // Micro-interaction for the terminal cursor and hover states
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mousedown', () => {
+                el.classList.add('scale-95');
+                setTimeout(() => el.classList.remove('scale-95'), 100);
+            });
+        });
+
+        // Simple scroll reveal effect for sections
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-10');
+            observer.observe(section);
+        });
+    </script>
+</body></html>

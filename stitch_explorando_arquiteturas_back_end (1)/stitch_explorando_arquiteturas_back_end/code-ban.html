@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bancos de Dados | Back-End Mastery</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Geist:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary": "#00dce5",
+                        "secondary": "#b6c6ed",
+                        "on-surface": "#d9e2ff",
+                        "on-tertiary-fixed": "#002021",
+                        "inverse-primary": "#515f78",
+                        "on-background": "#d9e2ff",
+                        "outline-variant": "#44474d",
+                        "tertiary-fixed-dim": "#00dce5",
+                        "inverse-on-surface": "#263049",
+                        "on-secondary": "#20304f",
+                        "primary": "#b9c7e4",
+                        "on-secondary-container": "#a5b5db",
+                        "surface-container-lowest": "#030d25",
+                        "primary-container": "#0a192f",
+                        "surface-container": "#151f37",
+                        "on-primary-container": "#74829d",
+                        "surface-container-highest": "#2a344e",
+                        "tertiary-fixed": "#63f7ff",
+                        "primary-fixed": "#d6e3ff",
+                        "secondary-container": "#374767",
+                        "secondary-fixed-dim": "#b6c6ed",
+                        "on-primary-fixed-variant": "#39475f",
+                        "surface-variant": "#2a344e",
+                        "on-secondary-fixed": "#091b39",
+                        "error": "#ffb4ab",
+                        "surface": "#07122a",
+                        "surface-container-high": "#1f2942",
+                        "on-primary-fixed": "#0d1c32",
+                        "on-tertiary-container": "#009096",
+                        "on-tertiary-fixed-variant": "#004f53",
+                        "on-surface-variant": "#c5c6cd",
+                        "surface-bright": "#2f3952",
+                        "tertiary-container": "#001d1f",
+                        "inverse-surface": "#d9e2ff",
+                        "on-tertiary": "#003739",
+                        "on-error": "#690005",
+                        "on-primary": "#233148",
+                        "surface-container-low": "#101b33",
+                        "surface-dim": "#07122a",
+                        "outline": "#8f9097",
+                        "on-error-container": "#ffdad6",
+                        "error-container": "#93000a",
+                        "surface-tint": "#b9c7e4",
+                        "on-secondary-fixed-variant": "#374767",
+                        "primary-fixed-dim": "#b9c7e4",
+                        "secondary-fixed": "#d8e2ff",
+                        "background": "#07122a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "base": "8px",
+                        "container-max": "1280px",
+                        "margin-desktop": "48px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Geist"],
+                        "label-md": ["JetBrains Mono"],
+                        "headline-lg": ["JetBrains Mono"],
+                        "body-lg": ["Geist"],
+                        "code-sm": ["JetBrains Mono"],
+                        "display-lg": ["JetBrains Mono"],
+                        "headline-md": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "code-sm": ["13px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(21, 31, 55, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid #233554;
+        }
+        .cyan-glow:hover {
+            box-shadow: 0 0 0 2px #00dce5;
+        }
+        .terminal-header::before {
+            content: '';
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #ff5f56;
+            border-radius: 50%;
+            margin-right: 6px;
+            box-shadow: 16px 0 0 #ffbd2e, 32px 0 0 #27c93f;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #07122a; }
+        ::-webkit-scrollbar-thumb { background: #374767; border-radius: 3px; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="fixed top-0 z-[60] w-full h-16 bg-surface border-b border-outline-variant flex justify-between items-center px-margin-mobile md:px-margin-desktop">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-tertiary" data-icon="terminal">terminal</span>
+<h1 class="font-headline-md text-headline-md text-on-surface tracking-tighter">Back-End Mastery</h1>
+</div>
+<nav class="hidden md:flex gap-8">
+<a class="text-on-surface-variant hover:text-tertiary transition-colors font-label-md text-label-md" href="code-arq.html">Inicio</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors font-label-md text-label-md" href="code-lin.html">Linguagens</a>
+<a class="text-tertiary font-bold font-label-md text-label-md" href="code-ban.html">DBs</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors font-label-md text-label-md" href="code-mas.html">Sistemas</a>
+</nav>
+</header>
+<main class="pt-24 pb-32 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<!-- Hero Section -->
+<section class="mb-16 md:mb-24">
+<div class="grid md:grid-cols-2 gap-12 items-center">
+<div>
+<span class="text-tertiary font-label-md text-label-md uppercase tracking-widest block mb-4">Módulo 03: Arquitetura de Dados</span>
+<h2 class="font-display-lg text-display-lg mb-6 leading-tight">Domine a Camada de <span class="text-tertiary">Persistence</span>.</h2>
+<p class="text-on-surface-variant font-body-lg text-body-lg mb-8 max-w-xl">
+                        O dever principal de um engenheiro back-end é gerenciar o estado. Entender quando favorecer schemas Relational rígidos versus horizontal Scalability flexível é a base de uma arquitetura de alta performance.
+                    </p>
+
+</div>
+<div class="relative group">
+<div class="absolute -inset-1 bg-tertiary/20 rounded-xl blur group-hover:bg-tertiary/30 transition-all"></div>
+<div class="relative glass-card p-6 rounded-xl aspect-video flex flex-col">
+<div class="terminal-header h-4 mb-6 opacity-60"></div>
+<div class="flex-1 font-code-sm text-code-sm text-secondary space-y-2 overflow-hidden">
+<p class="text-on-tertiary-container">// Conceptualizing Data Flow</p>
+<p><span class="text-tertiary">const</span> persistence = async (strategy) =&gt; {</p>
+<p class="pl-4">if (strategy === <span class="text-secondary">'ACID'</span>) return <span class="text-secondary">'SQL'</span>;</p>
+<p class="pl-4">if (strategy === <span class="text-secondary">'BASE'</span>) return <span class="text-secondary">'NoSQL'</span>;</p>
+<p>}</p>
+<div class="pt-4 animate-pulse">
+<span class="bg-tertiary/20 text-tertiary px-2 py-1">Executando Query...</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Bento Grid: The Comparison -->
+<section class="mb-24">
+<h3 class="font-headline-lg text-headline-lg mb-12 flex items-center gap-4">
+<span class="w-12 h-px bg-outline-variant"></span>
+                O Pivô de Paradigma
+            </h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- SQL Focus -->
+<div class="md:col-span-2 glass-card p-8 rounded-none border-l-4 border-l-tertiary">
+<div class="flex justify-between items-start mb-8">
+<div>
+<h4 class="font-headline-md text-headline-md text-tertiary mb-2">Relational (SQL)</h4>
+<p class="text-on-surface-variant font-body-md text-body-md">Estruturado, Atômico e Consistente.</p>
+</div>
+<span class="material-symbols-outlined text-4xl text-tertiary" data-icon="database">database</span>
+</div>
+<div class="grid md:grid-cols-2 gap-8 mb-8">
+<ul class="space-y-4">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-tertiary text-sm mt-1" data-icon="check_circle" data-weight="fill">check_circle</span>
+<div class="font-body-md text-body-md">Schemas rígidos garantem alta integridade de dados.</div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-tertiary text-sm mt-1" data-icon="check_circle" data-weight="fill">check_circle</span>
+<div class="font-body-md text-body-md">Joins complexos permitem consultas analíticas poderosas.</div>
+</li>
+</ul>
+<ul class="space-y-4">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-tertiary text-sm mt-1" data-icon="check_circle" data-weight="fill">check_circle</span>
+<div class="font-body-md text-body-md">Conformidade total com ACID para segurança transacional.</div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-tertiary text-sm mt-1" data-icon="check_circle" data-weight="fill">check_circle</span>
+<div class="font-body-md text-body-md">Otimizado para vertical Scalability e armazenamento.</div>
+</li>
+</ul>
+</div>
+</div>
+<!-- NoSQL Sidebar -->
+<div class="bg-secondary-container p-8 rounded-none border border-outline-variant flex flex-col justify-between">
+<div>
+<h4 class="font-headline-md text-headline-md text-on-surface mb-2">Non-Relational (NoSQL)</h4>
+<p class="text-on-secondary-container font-body-md text-body-md mb-6">Distribuído, Flexível, Escalável.</p>
+<p class="text-on-surface-variant font-body-md text-body-md italic border-l-2 border-outline-variant pl-4">
+                            "Quando o schema é desconhecido ou evolui rapidamente, velocidade e escala têm precedência sobre relações estritas."
+                        </p>
+</div>
+<div class="mt-8 flex flex-wrap gap-2">
+<span class="bg-surface/50 text-secondary px-3 py-1 text-xs font-label-md">DYNAMIC SCHEMA</span>
+<span class="bg-surface/50 text-secondary px-3 py-1 text-xs font-label-md">HORIZONTAL SCALE</span>
+</div>
+</div>
+<!-- Comparison Table -->
+<div class="md:col-span-3 overflow-x-auto border border-outline-variant mt-6">
+<table class="w-full text-left font-body-md text-body-md border-collapse">
+<thead>
+<tr class="bg-surface-container-highest/50 border-b border-outline-variant">
+<th class="p-6 font-label-md text-tertiary">RECURSO</th>
+<th class="p-6 font-label-md text-tertiary">SQL (RELATIONAL)</th>
+<th class="p-6 font-label-md text-tertiary">NoSQL (FLEXÍVEL)</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30">
+<tr>
+<td class="p-6 font-label-md text-on-surface">Modelo de Dados</td>
+<td class="p-6">Tabelas com linhas/colunas fixas</td>
+<td class="p-6">Document, Key-Value, Graph, Wide-column</td>
+</tr>
+<tr>
+<td class="p-6 font-label-md text-on-surface">Scalability</td>
+<td class="p-6">Vertical (Scale Up de hardware)</td>
+<td class="p-6">Horizontal (Scale Out em clusters)</td>
+</tr>
+<tr>
+<td class="p-6 font-label-md text-on-surface">Joins</td>
+<td class="p-6">Nativo, complexo, multi-tabelas</td>
+<td class="p-6">Geralmente tratado na lógica da aplicação</td>
+</tr>
+<tr>
+<td class="p-6 font-label-md text-on-surface">Objetivo Principal</td>
+<td class="p-6">Precisão &amp; Normalização</td>
+<td class="p-6">Disponibilidade &amp; Velocidade de Desenvolvimento</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<!-- Core Technologies -->
+<section class="mb-24">
+<h3 class="font-headline-lg text-headline-lg mb-12">Os Pilares do Ecossistema</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- PostgreSQL -->
+<div class="glass-card p-6 flex flex-col group transition-all hover:translate-y-[-4px]">
+<div class="mb-6 flex justify-between items-center">
+<img alt="PostgreSQL" class="w-12 h-12 grayscale group-hover:grayscale-0 transition-all rounded-lg" data-alt="A macro studio photograph of a sleek, deep blue elephant icon representating PostgreSQL on a dark technical background. The lighting is dramatic and moody, utilizing high-contrast electric cyan highlights to emphasize professional engineering tools. The overall style is modern minimalist, focusing on digital infrastructure and high-performance database technology." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3CuZNAP0FFkwQ35ETi5Lha1TNMrkC2sp2OCnuBfDG7mHbkVOzdxHQoLp7oxbC61ffaJ6VGvZ5gCbG_Ghom4aKROLzEFIhZO_TWzcRvA-fFAIBEcybVcc-J_KulqJKVn3nKl_91PFHN6kic1fdhoUE9LpP4gwPzdurkkIkkOoQt22bdhEEHgSxMIqsCeK42RjDL8FkKp8usT8u1tEgyEKk_fAMBajILPDCvRSYRHH10b8xMkrG1O8DGhYSXUkeJnCPMzqxWwfxULw"/>
+<span class="text-xs font-label-md bg-tertiary/10 text-tertiary px-2 py-1 uppercase">Relational</span>
+</div>
+<h5 class="font-headline-md text-headline-md mb-2">PostgreSQL</h5>
+<p class="text-on-surface-variant font-body-md text-body-md mb-6 flex-1">O banco de dados open-source mais avançado do mundo. Conhecido pela conformidade com padrões e indexação extensível.</p>
+
+</div>
+<!-- MySQL -->
+<div class="glass-card p-6 flex flex-col group transition-all hover:translate-y-[-4px]">
+<div class="mb-6 flex justify-between items-center">
+<img alt="MySQL" class="w-12 h-12 grayscale group-hover:grayscale-0 transition-all rounded-lg" data-alt="A clean, minimalist 3D rendering of a dolphin icon representing MySQL. The scene is illuminated with cold studio lights, casting soft shadows against a dark charcoal background. The color palette consists of steel blues and bright whites, reflecting a corporate and stable server environment. The aesthetic is professional and technical, symbolizing reliable data storage." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzRRA7Q2C_F2V-R5mLmmCXLuKc72iDpz85J305kICVain3J4Ra-jCIK-BEg54o2Zn14XG1CKk97I_PuFrv_5eABuRxq3SGk2Ng5wYx1EK22s7Tr_PL-_jTyCKN23vXjwMJpDov_elPVR_09y9m8BhVPP5OaETNdce7VB0ASHuSjTdq2EC_WNh8AeB2Ie1XN9KfBGWxs8QqAT6RYuvydBwiMnm-oPsEf5iWjjZ1fmGZQ5-019jKBEylaJVnP_Os43YiUoqimCBNF7k"/>
+<span class="text-xs font-label-md bg-tertiary/10 text-tertiary px-2 py-1 uppercase">Relational</span>
+</div>
+<h5 class="font-headline-md text-headline-md mb-2">MySQL</h5>
+<p class="text-on-surface-variant font-body-md text-body-md mb-6 flex-1">A espinha dorsal da web moderna. Ubíquo, confiável e o padrão para CMS e aplicações web em geral.</p>
+
+</div>
+<!-- MongoDB -->
+<div class="glass-card p-6 flex flex-col group transition-all hover:translate-y-[-4px]">
+<div class="mb-6 flex justify-between items-center">
+<img alt="MongoDB" class="w-12 h-12 grayscale group-hover:grayscale-0 transition-all rounded-lg" data-alt="A vibrant, modern digital illustration of a green leaf logo representing MongoDB. The background is a deep obsidian color, allowing the bright neon green accents to pop. The lighting is cinematic, highlighting the organic curves of the logo against a grid-like technical overlay. The visual style is high-tech and energetic, symbolizing flexible and scalable cloud data solutions." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD30uxPniUB_cYhzWSAlS-c0vUp-nMhTP2YSV2nX1ACWDuQZeap4DY06d_d095zGRzk7sZQ_KPDrZtLj77GvBtjuWhXVLsIgFdilVIhkGEEIxI815i0r8-JPQbGlUwTvGVzCAtcJycFezU4_XK-uLxZYVOBrYLAzj-9y020ruPNGh1SGze9XY2ViQY2_wp2qgZtDbDmv4is6vB8DQ58EcTCZxs4B-t-L3BELBCl5GQqBZY7InoVjdOi6kUMvPRma0TupaZqRTp5JyE"/>
+<span class="text-xs font-label-md bg-secondary/10 text-secondary px-2 py-1">NOSQL / DOC</span>
+</div>
+<h5 class="font-headline-md text-headline-md mb-2">MongoDB</h5>
+<p class="text-on-surface-variant font-body-md text-body-md mb-6 flex-1">Banco de dados orientado a documentos líder. O formato BSON permite iteração rápida e produtividade do desenvolvedor.</p>
+
+</div>
+<!-- Redis -->
+<div class="glass-card p-6 flex flex-col group transition-all hover:translate-y-[-4px]">
+<div class="mb-6 flex justify-between items-center">
+<img alt="Redis" class="w-12 h-12 grayscale group-hover:grayscale-0 transition-all rounded-lg" data-alt="A stylized 3D red cube icon representing Redis, set against a dark, foggy technical backdrop. The cube glows with a warm crimson inner light, suggesting high-speed activity and in-memory processing. The surrounding atmosphere is minimalist and sleek, with thin white laser lines tracing a grid on the floor. The overall mood is focused and high-performance, emphasizing speed and efficiency." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbP7wfziivy6mJkeKqXflHpO99f8dvJjlLyFjH-WrvAYekE2UGsc43fAU4_qj6jU-J0y20ITqou2Fqd5PqEfEYvBEUvRQm2yHfoO8R0J4EHzQthCBi4XTjUHRE4i7J_-eAoHh1ZEkidsTqQ9IQT0bueuEE3trDxVk9yAj-nm_809SO6N8mEhzaUpygKHhizpyEmrS4u7uDU0B1CXb70hBW8WHNY5liSQ8a266kiP1MIVzDVit5oRaiuuF-zYsjzECJg7aCN4e5oxo"/>
+<span class="text-xs font-label-md bg-secondary/10 text-secondary px-2 py-1">NOSQL / K-V</span>
+</div>
+<h5 class="font-headline-md text-headline-md mb-2">Redis</h5>
+<p class="text-on-surface-variant font-body-md text-body-md mb-6 flex-1">Armazenamento de estrutura de dados in-memory. Frequentemente usado como cache ou message broker para respostas em sub-milissegundos.</p>
+
+</div>
+</div>
+</section>
+<!-- Dynamic Content Section -->
+<section class="mb-12">
+<div class="bg-surface-container-low border border-outline-variant p-1">
+<div class="terminal-header bg-surface-container-high px-4 py-2 border-b border-outline-variant flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant">terminal.sql.query</span>
+<div class="flex gap-2">
+<div class="w-3 h-3 rounded-full bg-outline-variant"></div>
+<div class="w-3 h-3 rounded-full bg-outline-variant"></div>
+</div>
+</div>
+<div class="p-8 font-code-sm text-code-sm leading-relaxed overflow-x-auto">
+<div class="text-on-primary-container mb-4">-- Complex Join Example: Analytics Query</div>
+<div class="space-y-1">
+<p><span class="text-tertiary">SELECT</span> u.username, COUNT(o.id) <span class="text-tertiary">AS</span> total_orders</p>
+<p><span class="text-tertiary">FROM</span> users u</p>
+<p><span class="text-tertiary">JOIN</span> orders o <span class="text-tertiary">ON</span> u.id = o.user_id</p>
+<p><span class="text-tertiary">WHERE</span> o.created_at &gt; <span class="text-secondary">'2023-01-01'</span></p>
+<p><span class="text-tertiary">GROUP BY</span> u.username</p>
+<p><span class="text-tertiary">HAVING</span> total_orders &gt; 5</p>
+<p><span class="text-tertiary">ORDER BY</span> total_orders <span class="text-tertiary">DESC</span>;</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full px-margin-mobile py-8 flex flex-col items-center gap-4 bg-surface-container-lowest border-t border-outline-variant mt-margin-desktop">
+
+<p class="font-body-md text-body-md text-on-surface-variant text-center">Back-End Trabalho de IA</p>
+</footer>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 flex justify-around items-center py-2 bg-surface-container border-t border-outline-variant">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="code">code</span>
+<span class="font-label-md text-label-md">Idiomas</span>
+</a>
+<a class="flex flex-col items-center justify-center text-tertiary font-bold bg-secondary-container rounded-xl px-3 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="database">database</span>
+<span class="font-label-md text-label-md">DBs</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+<span class="font-label-md text-label-md">Sistemas</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions
+        document.querySelectorAll('button, a').forEach(el => {
+            el.addEventListener('mousedown', () => {
+                el.classList.add('scale-95');
+                setTimeout(() => el.classList.remove('scale-95'), 100);
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-4');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-4');
+            observer.observe(card);
+        });
+    </script>
+</body></html>
